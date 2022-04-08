@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
 app.use(express.json())
 
 // routing setup 
-// app.use("/register",registerRouter)
+app.use("/register",registerRouter)
 // app.use("/login",loginRouter)
 
 //  404 not found handler
