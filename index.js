@@ -2,9 +2,11 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
-const { errorHandler, notFoundHandler } = require("./middlewares/common/errorHandler");
 
 // Internal imports 
+const { errorHandler, notFoundHandler } = require("./middlewares/common/errorHandler");
+const usersRouter = require("./rouer/usersRouter")
+
 // database connection
 mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
     useNewUrlParser: true,
@@ -16,7 +18,7 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
 app.use(express.json())
 
 // routing setup 
-app.use("/register",registerRouter)
+app.use("/users",usersRouter)
 // app.use("/login",loginRouter)
 
 //  404 not found handler
