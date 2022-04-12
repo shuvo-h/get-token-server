@@ -19,7 +19,7 @@ const uploadImage = async function (req,res,next) {
             }else{
                 res.status(500).json({
                     errors:{
-                        common:{msg: "Problem to upload the image!"}
+                        common:{msg: "Problem to upload the avater!"}
                     }
                 })
             }
