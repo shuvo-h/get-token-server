@@ -6,9 +6,8 @@ function notFoundHandler(req,res,next) {
 }
 
 function errorHandler(err,req,res,next) {
-    res.locals.error = {message: err.message};
-    res.status(err.status || 500);
-    res.json(res.locals.error)
+    res.status(err.status || 500)
+        .json({message: err.message})
 }
 
 module.exports = {

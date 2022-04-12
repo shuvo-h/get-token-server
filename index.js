@@ -2,10 +2,12 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
+const { errorHandler, notFoundHandler } = require("./middleware/common/errorHandler");
+const app = express();
+const port = process.env.SERVER_RUNNING_PORT || 5001;
 
 // Internal imports 
-const { errorHandler, notFoundHandler } = require("./middlewares/common/errorHandler");
-const usersRouter = require("./rouer/usersRouter")
+
 
 // database connection
 mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
@@ -18,8 +20,12 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
 app.use(express.json())
 
 // routing setup 
-app.use("/users",usersRouter)
-// app.use("/login",loginRouter)
+
+
+// public test route 
+app.get("/",(req,res)=>{
+    res.send("Server is working, go ahead")
+})
 
 //  404 not found handler
 app.use(notFoundHandler);
@@ -27,6 +33,7 @@ app.use(notFoundHandler);
 // common error handling
 app.use(errorHandler)
 
-app.listen(process.env.PORT,()=>{
-    console.log("App is running on port",process.env.PORT);
+// listen app 
+app.listen(port,()=>{
+    console.log("App is running on port",port);
 })
