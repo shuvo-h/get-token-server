@@ -2,7 +2,7 @@
 const {check, validationResult} = require("express-validator");
 const { engine } = require("express/lib/application");
 const createError = require("http-errors");
-const User = require("../../models/People");
+const User = require("../../models/people");
 const { deleteImage } = require("../imageUploader/uploadImage");
 
 // new user info validate 
