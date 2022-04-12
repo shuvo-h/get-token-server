@@ -1,10 +1,16 @@
 // External imports
 const express = require("express");
+const cors = require('cors')
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const { errorHandler, notFoundHandler } = require("./middleware/common/errorHandler");
 const app = express();
 const port = process.env.SERVER_RUNNING_PORT || 5001;
+
+// requested parsers 
+app.use(express.json())
+app.use(cors({ origin: true }));
+app.use(express.urlencoded({limit:"50mb",extended:true}));
 
 // Internal imports 
 const authenticateRouter = require("./router/authenticateRouter")
@@ -15,9 +21,6 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
     useUnifiedTopology: true,
 }).then(()=>console.log("DB connection successfull."))
 .catch(err=>console.log(err))
-
-// requested parsers 
-app.use(express.json())
 
 // routing setup 
 app.use("/authenticate",authenticateRouter)

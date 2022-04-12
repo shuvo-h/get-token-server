@@ -1,5 +1,6 @@
 // external imports 
 const bcrypt = require("bcrypt");
+const { deleteImage } = require("../../middleware/imageUploader/uploadImage");
 // internal imports 
 const User = require("../../models/People")
 
@@ -13,6 +14,9 @@ async function addNewUser(req,res,next) {
         const result = await newUser.save();
         res.status(200).json({message:"User was added successfully!"})
     } catch (err) {
+        if (newUser.avatar_id) {
+            deleteImage(newUser.avatar_id);
+        }
         res.status(500).json({
             errors:{
                 common:{msg: "Unknown error occured!"}

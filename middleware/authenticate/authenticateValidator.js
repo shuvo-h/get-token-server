@@ -3,6 +3,7 @@ const {check, validationResult} = require("express-validator");
 const { engine } = require("express/lib/application");
 const createError = require("http-errors");
 const User = require("../../models/People");
+const { deleteImage } = require("../imageUploader/uploadImage");
 
 // new user info validate 
 const addUserValidator = [
@@ -27,9 +28,15 @@ const addUserValidator = [
             }
         }),
     check("password")
-        .isStrongPassword()
-        .withMessage("Password must be at least 8 characters long and should contain 1 lowercase, 1 uppercase, 1 number & 1 symbol")
-]
+        .isStrongPassword({
+            minLength: 8,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1
+        })
+        .withMessage("Password must be at least 8 characters long and should contain 1 lowercase, 1 uppercase, 1 number & 1 symbol"),
+
+    ]
 
 const addUserValidationHandler = function (req,res,next) {
     const errors = validationResult(req);
@@ -38,8 +45,9 @@ const addUserValidationHandler = function (req,res,next) {
         next();
     }else{
         // remove the file if anything uploaded eg. avater 
-        // (here)
-
+        if (req?.body?.avatar_id) {
+            deleteImage(req?.body?.avatar_id)
+        }
         // send error ersponse
         res.status(500).json({errors:mappedErrors})
     }
