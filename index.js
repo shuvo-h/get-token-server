@@ -5,7 +5,7 @@ const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const { errorHandler, notFoundHandler } = require("./middleware/common/errorHandler");
 const app = express();
-const port = process.env.SERVER_RUNNING_PORT || 5001;
+const port = process.env.PORT || "5000";
 
 // requested parsers 
 app.use(express.json())
