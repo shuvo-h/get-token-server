@@ -2,7 +2,6 @@
 const bcrypt = require("bcrypt");
 const { deleteImage } = require("../../middleware/imageUploader/uploadImage");
 // internal imports 
-// const User = require("../../models/People")
 const User = require("../../models/people")
 
 // add a new user as registration 
