@@ -9,6 +9,7 @@ cloudinary.config({
 const uploadImage = async function (req,res,next) {
     const image = req.body.avatar;
 
+    // upload the image 
    if (image) {
         try {
             const cloudRes = await cloudinary.uploader.upload(image,{upload_preset:"get-token"})
