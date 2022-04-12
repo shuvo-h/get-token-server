@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.SERVER_RUNNING_PORT || 5001;
 
 // Internal imports 
-
+const authenticateRouter = require("./router/authenticateRouter")
 
 // database connection
 mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
 app.use(express.json())
 
 // routing setup 
-
+app.use("/authenticate",authenticateRouter)
 
 // public test route 
 app.get("/",(req,res)=>{
