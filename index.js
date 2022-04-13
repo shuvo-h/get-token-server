@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 
 // requested parsers 
 app.use(express.json());
-app.use(cors({ origin: true }));
+app.use(cors({ credentials:true,origin: "http://localhost:3000" }));
 app.use(cookieParser(`${process.env.COOKIE_SIGN_SECRET}`));
 app.use(express.urlencoded({limit:"50mb",extended:true}));
 

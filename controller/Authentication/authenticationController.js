@@ -45,14 +45,15 @@ async function doUserLogin(req,res,next) {
                 
                 // generate token 
                 const token = jwt.sign(userObject,process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRY})
-                // console.log(token);
 
                 // set cookie 
-                res.cookie(process.env.COOKIE_NAME,token,{
+                res.status(200).cookie(process.env.COOKIE_NAME,token,{
                     maxAge: process.env.JWT_EXPIRY,
+                    expires: new Date(Date.now() + process.env.JWT_EXPIRY),
                     httpOnly: true,
-                    signed: true
+                    signed: true,
                 }).json(userObject)
+
             }else{
                 throw createError("Login failed. please try again!")
             }
