@@ -1,15 +1,17 @@
 // External imports
 const express = require("express");
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const { errorHandler, notFoundHandler } = require("./middleware/common/errorHandler");
 const app = express();
-const port = process.env.SERVER_RUNNING_PORT || 5001;
+const port = process.env.PORT || 5000;
 
 // requested parsers 
-app.use(express.json())
+app.use(express.json());
 app.use(cors({ origin: true }));
+app.use(cookieParser(`${process.env.COOKIE_SIGN_SECRET}`));
 app.use(express.urlencoded({limit:"50mb",extended:true}));
 
 // Internal imports 
