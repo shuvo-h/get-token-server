@@ -15,7 +15,8 @@ app.use(cookieParser(`${process.env.COOKIE_SIGN_SECRET}`));
 app.use(express.urlencoded({limit:"50mb",extended:true}));
 
 // Internal imports 
-const authenticateRouter = require("./router/authenticateRouter")
+const authenticateRouter = require("./router/authenticateRouter");
+const hotelRouter = require("./router/hotelRouter");
 
 // database connection
 mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
@@ -26,6 +27,7 @@ mongoose.connect(process.env.MONGO_CONNECTION_STRING,{
 
 // routing setup 
 app.use("/authenticate",authenticateRouter)
+app.use("/hotels",hotelRouter)
 
 // public test route 
 app.get("/",(req,res)=>{

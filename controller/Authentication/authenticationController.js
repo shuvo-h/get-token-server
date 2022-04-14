@@ -55,13 +55,14 @@ async function doUserLogin(req,res,next) {
                 }).json(userObject)
 
             }else{
-                throw createError("Login failed. please try again!")
+                // throw createError("Login failed. please try again!")
+                res.json({error:{message:"Login failed. please try again!"}})
             }
         }else{
-            throw createError("Login failed. Please try again!")
+            // throw createError("Login failed. Please try again!")
+            res.json({error:{message:"Login failed. please try again!"}})
         }
     } catch (err) {
-        console.log(err);
         res.status(500).json({
             email: req.body.email,
             message: "Login failed!"
@@ -69,14 +70,29 @@ async function doUserLogin(req,res,next) {
     }
 }
 
+
+
+// keep login the exist user 
+function keepUserLogin(req,res,next) {
+    if (req.decodedUser) {
+        res.status(200).json(req.decodedUser)
+    }else{
+        res.status(401).json({message:"Unauthorized user!"})
+    }
+}
+
+
+
 // do logout 
 function logout(req,res) {
     res.clearCookie(process.env.COOKIE_NAME)
-    .json({message:"logout successful!"});
+    .json({user:null,message:"logout successful!"});
 }
+
 
 module.exports = {
     addNewUser,
     doUserLogin,
+    keepUserLogin,
     logout
 }

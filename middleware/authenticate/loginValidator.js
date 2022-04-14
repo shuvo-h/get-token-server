@@ -1,4 +1,5 @@
 const { check, validationResult } = require("express-validator");
+const createError = require("http-errors");
 
 const doLoginValidator = [
     check("email")
@@ -16,7 +17,7 @@ const doLoginValidationHandler = function (req,res,next) {
     if (Object.keys(mappedErrors).length === 0) {
         next();
     }else{
-        res.status(500)
+        res.status(510)
         .json({errors: mappedErrors, data:req.boby})
     }
 }

@@ -1,6 +1,6 @@
 // external imports
 const express = require("express");
-const { addNewUser, doUserLogin, logout } = require("../controller/Authentication/authenticationController");
+const { addNewUser, doUserLogin, logout, keepUserLogin } = require("../controller/Authentication/authenticationController");
 const { addUserValidator, addUserValidationHandler } = require("../middleware/authenticate/authenticateValidator");
 const { doLoginValidator, doLoginValidationHandler } = require("../middleware/authenticate/loginValidator");
 const { checkLogin } = require("../middleware/common/checkLogin");
@@ -13,6 +13,10 @@ router.post("/registration",uploadImage,addUserValidator,addUserValidationHandle
 
 // login route path                                   checkLogin  // delete this (checkLogin) fromk this route. It is written for protected routes only
 router.post("/login",doLoginValidator,doLoginValidationHandler,doUserLogin)
+
+// keep user login router 
+router.get("/onAuthStateChange",checkLogin,keepUserLogin)
+
 
 // logout
 router.delete("/logout",logout)
