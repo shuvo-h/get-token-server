@@ -3,16 +3,21 @@ const { uploadOneImage } = require("../../utilities/singleImageUploader");
 const uploadHotelImgae = async function (req,res,next) {
     const images = req.body?.img_uri;
     if (images.length) {
-        const images_URIs = images.map(img=>{
-            const uriAndId = uploadOneImage(img);
+        let images_URIs = []
+        images.map(async(img,ind)=>{
+            const uriAndId = await uploadOneImage(img.uri);
             if (uriAndId.url && uriAndId.cloud_id) {
-                return uriAndId;
+                images_URIs.push({uri:uriAndId.url,title:`${img.title}`,id:uriAndId.cloud_id})
+                return uriAndId
             }else{
                 return
             }
         })
-        req.body.img_uri = images_URIs;
-        next();
+        const nextToUploadImage = setTimeout(()=>{
+            req.body.img_uri = images_URIs;
+            next();
+            clearTimeout(nextToUploadImage)
+        },5000 * images.length)
     }else{
         next();
     }

@@ -1,6 +1,11 @@
+const Hotels = require("../../models/Hotels");
+
 async function addNewHotel(req,res,next) {
+    newHotel = new Hotels(req.body); 
     try {
-        console.log(req.body,"Inser the hotel info through mongoose");
+        const result = await newHotel.save();
+        res.status(200).json({result})
+
     } catch (err) {
         res.status(500).json({
             errors:{

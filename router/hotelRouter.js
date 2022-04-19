@@ -5,7 +5,7 @@ const { uploadHotelImgae } = require("../middleware/imageUploader/hotelImageUplo
 // internal imports 
 
 const router = express.Router();
-
+// uploadHotelImgae
 // add new hotel router 
 router.post("/hotel",uploadHotelImgae,addNewHotel)
 
